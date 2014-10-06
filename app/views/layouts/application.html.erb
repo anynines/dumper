@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Avarteq Dumper</title>
+
+  <link href='http://fonts.googleapis.com/css?family=Fredericka+the+Great' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,700,400' rel='stylesheet' type='text/css'>
+
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+
+  <%= csrf_meta_tags %>
+</head>
+<body>
+
+<div class="container">
+  <div class="header">
+    <ul class="nav nav-pills pull-right">
+      <li class="<%= (params[:controller] == 'dumps' && params[:action] == 'index') ? 'active' : '' %>">
+        <%= link_to 'Dumps', dumps_path %>
+      </li>
+      <li class="<%= (params[:controller] == 'dumps' && params[:action] == 'new') ? 'active' : '' %>">
+        <%= link_to 'New Dump', new_dump_path %>
+      </li>
+    </ul>
+    <h3 class="text-muted">Avarteq Dumper</h3>
+  </div>
+
+  <% if flash[:notice] %>
+      <div class="alert alert-info" role="alert">
+        <p>
+          <%= flash[:notice] %>
+        </p>
+      </div>
+  <% end %>
+
+  <%= yield %>
+
+  <div class="footer">
+    <p>&copy; Avarteq</p>
+  </div>
+
+</div> <!-- /container -->
+
+</body>
+</html>

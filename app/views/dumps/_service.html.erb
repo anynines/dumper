@@ -1,0 +1,10 @@
+<tr>
+  <td>
+    <strong><%= service['name'] %></strong><br>
+    <small><%= service['credentials']['host'] %>:<%= service['credentials']['port'] %></small>
+  </td>
+  <td><%= service['credentials']['name'] %></td>
+  <td class="text-right">
+    <%= link_to 'Dump', schedule_dumps_path(service['name']), class: 'btn btn-default' %>
+  </td>
+</tr>

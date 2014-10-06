@@ -1,0 +1,21 @@
+<h1>PostgreSQL</h1>
+
+<div class="row dumper">
+  <% unless @services.blank? %>
+      <table class="table table-striped table-hover">
+        <tr>
+          <th>Service</th>
+          <th>Table</th>
+          <th>&nbsp;</th>
+        </tr>
+
+        <%= render(partial: 'service', collection: @services) %>
+      </table>
+
+  <% else %>
+      <div class="alert alert-danger" role="alert">
+        <p>No services found. Check your manifest.yml files!</p>
+      </div>
+  <% end %>
+
+</div>
