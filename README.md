@@ -35,7 +35,13 @@ Note: You can see the available service plans with ```cf marketplace```
 Checkout the repository:
 ```sh
 git clone https://github.com/anynines/dumper.git
+cd dumper
 ```
+Bundle the gems:
+```sh
+bundle install
+```
+
 Edit the [manifest.yml](#manifest-files) files and then push the app with it's background worker:
 ```sh
  cf push -f web-manifest.yml
