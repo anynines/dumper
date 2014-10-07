@@ -23,6 +23,14 @@ body
   padding-bottom: 20px;
 }
 
+a, a:hover {
+  color: #e4833e;
+}
+
+.nav-pills > li.active > a, .nav-pills > li.active > a:hover, .nav-pills > li.active > a:focus {
+  background-color: #e4833e;
+}
+
 .header,
 .dumper,
 .footer

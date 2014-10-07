@@ -1,3 +1,5 @@
+require 'fog'
+
 class PostgreDumpWorker
   include Sidekiq::Worker
 
@@ -5,16 +7,21 @@ class PostgreDumpWorker
 
   class << self
 
-    def default_path
-      Rails.application.root + "dumps"
+    def directory_key
+      "dumps"
+    end
+
+    def storage
+      @@storage ||= Fog::Storage.new($swift_config)
+    end
+
+    def directory
+      storage.directories.create(:key => directory_key)
+      storage.directories.get(directory_key)
     end
 
     def dumps(path = nil)
-      path ||= default_path
-
-      Dir.entries(path).map { |filename|
-        filename if is_valid_dump? filename
-      }.compact
+      directory.files
     end
 
     def is_valid_service?(service_name)
@@ -44,14 +51,37 @@ class PostgreDumpWorker
     @credentials = @service['credentials']
 
     filename ||= service_name + '_' + Time.now.strftime("%Y%m%d%H%M%S") + '.sql'
-    @output_path = PostgreDumpWorker.default_path + filename
 
     logger.info "Dump into #{filename}..."
+
+    @output_path = Rails.application.root + "dumps" + filename
 
     dump = PgDumper.new(@credentials['name'])
     dump.clean!
     dump.auth = { 'host' => @credentials['host'], 'port' => @credentials['port'], 'username' => @credentials['username'], 'password' => @credentials['password'] }
     dump.output = @output_path
-    dump.run
+
+    if dump.run
+      logger.info "Dump completed!"
+
+      @directory = self.class.directory
+
+      if @directory
+        logger.info "Uploading dump to swift..."
+
+        @directory.files.create(
+            :key    => filename,
+            :body   => File.open(@output_path),
+        )
+
+        logger.info "Upload completed!"
+      else
+        logger.error "Swift is not available."
+      end
+
+      File.delete(@output_path)
+    else
+      logger.error "Dump failed!"
+    end
   end
 end

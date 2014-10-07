@@ -1,22 +1,24 @@
 require 'cf-app-utils'
 require 'pg_dumper'
-require 'sidekiq/api'
+require 'fog'
+#require 'sidekiq/api'
+
 
 class DumpsController < ApplicationController
 
-  before_action :get_path, only: [:download, :delete]
+  before_action :get_file, only: [:download, :delete]
 
   def index
     @dumps = PostgreDumpWorker.dumps
   end
 
   def download
-    send_file @path
+    redirect_to @file.temp_signed_url(240, "GET")
   end
 
   def delete
-    File.delete(@path)
-    flash[:notice] = "Dump #{params[:filename]} deleted."
+    @file.destroy
+    flash[:notice] = "Dump #{@file.key} deleted."
     redirect_to dumps_path
   end
 
@@ -36,11 +38,11 @@ class DumpsController < ApplicationController
 
   private
 
-  def get_path
+  def get_file
     filename = params[:filename] + '.' + params[:format]
-    @path = PostgreDumpWorker.default_path + filename
+    @file = PostgreDumpWorker.dumps.get(filename)
 
-    if params[:filename].blank? || !PostgreDumpWorker.is_valid_dump?(filename)|| !File.exist?(path)
+    if params[:filename].blank? || !@file
       flash[:error] = "#{filename} not found."
       redirect_to dumps_path
     end
