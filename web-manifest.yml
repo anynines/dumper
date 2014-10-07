@@ -10,9 +10,10 @@ applications:
   services:
   - redis-dumper
   - swift-dumper
+  - mysql-dumper
   - postgre-dumper
   - postgre-dumper2
   env:
     LD_LIBRARY_PATH: /home/vcap/app/vendor/postgresql/lib
-    HTTP_AUTH_USER: admin
-    HTTP_AUTH_PWD: admin
+    HTTP_AUTH_USER: dumper
+    HTTP_AUTH_PWD: dumper

@@ -1,5 +1,3 @@
-<h1>Dumps</h1>
-
 <div class="row dumper">
   <% unless @dumps.blank? %>
       <table class="table table-striped table-hover">
@@ -9,7 +7,7 @@
           <th>&nbsp;</th>
         </tr>
 
-        <%= render(partial: 'dump', collection: @dumps) %>
+        <%= render(partial: '/dump', collection: @dumps) %>
       </table>
 
   <% else %>

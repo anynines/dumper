@@ -54,9 +54,17 @@ Rails.application.routes.draw do
   #     resources :products
   #   end
 
-  root 'dumps#index'
+  root 'postgre_dumps#index'
 
-  resources :dumps, only: ['index', 'new'] do
+  resources :postgre_dumps, only: ['index'] do
+    collection do
+      get 'schedule/:service_name', action: 'schedule', as: 'schedule'
+      get 'download/:filename', action: 'download', as: 'download'
+      get 'delete/:filename', action: 'delete', as: 'delete'
+    end
+  end
+
+  resources :mysql_dumps, only: ['index'] do
     collection do
       get 'schedule/:service_name', action: 'schedule', as: 'schedule'
       get 'download/:filename', action: 'download', as: 'download'

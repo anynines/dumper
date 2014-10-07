@@ -15,11 +15,11 @@
 <div class="container">
   <div class="header">
     <ul class="nav nav-pills pull-right">
-      <li class="<%= (params[:controller] == 'dumps' && params[:action] == 'index') ? 'active' : '' %>">
-        <%= link_to 'Dumps', dumps_path %>
+      <li class="<%= (params[:controller] == 'postgre_dumps' && params[:action] == 'index') ? 'active' : '' %>">
+        <%= link_to 'PostgreSQL', postgre_dumps_path %>
       </li>
-      <li class="<%= (params[:controller] == 'dumps' && params[:action] == 'new') ? 'active' : '' %>">
-        <%= link_to 'New Dump', new_dump_path %>
+      <li class="<%= (params[:controller] == 'mysql_dumps' && params[:action] == 'index') ? 'active' : '' %>">
+        <%= link_to 'MySQL', mysql_dumps_path %>
       </li>
     </ul>
     <h3 class="text-muted">Anynines Dumper</h3>
@@ -36,7 +36,7 @@
   <%= yield %>
 
   <div class="footer">
-    <p>&copy; Anynines</p>
+    <p>&copy; 2014 Anynines</p>
   </div>
 
 </div> <!-- /container -->

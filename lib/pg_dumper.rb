@@ -14,7 +14,7 @@ class PgDumper
   end
 
   def run(mode = :silent)
-    raise "ERROR: pg_dump executable not found" unless binary
+    raise "ERROR: executable not found" unless binary
 
     options = {}
 
@@ -82,10 +82,6 @@ class PgDumper
     @output = filename
   end
 
-  def output?
-    !!@output
-  end
-
   def output
     if File.respond_to?(:path)
       File.path(@output)
@@ -97,11 +93,7 @@ class PgDumper
   end
 
   def args
-    if output?
-      @args.dup.push('-f', output)
-    else
-      @args
-    end
+    @args.dup.push('-f', output)
   end
 
   private
@@ -112,9 +104,6 @@ class PgDumper
 
   def execute(cmd, options)
     full_cmd = "export PGPASSWORD=#{@password}\n" + cmd + "\nunset PGPASSWORD"
-
-    #puts [full_cmd, options].inspect
-
     system(full_cmd, options)
   end
 

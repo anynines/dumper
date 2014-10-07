@@ -1,4 +1,5 @@
 require 'fog'
+require 'pg_dumper'
 
 class PostgreDumpWorker
   include Sidekiq::Worker
@@ -8,7 +9,23 @@ class PostgreDumpWorker
   class << self
 
     def directory_key
-      "dumps"
+      "postgre"
+    end
+
+    def label
+      "PostgreSQL"
+    end
+
+    def service_label
+      /^postgresql(-.*)?$/
+    end
+
+    def dumper_class
+      PgDumper
+    end
+
+    def services
+      CF::App::Service.find_all_by_label('postgresql')
     end
 
     def storage
@@ -16,23 +33,21 @@ class PostgreDumpWorker
     end
 
     def directory
-      storage.directories.create(:key => directory_key)
-      storage.directories.get(directory_key)
+      self.storage.directories.create(:key => directory_key)
+      self.storage.directories.get(directory_key)
     end
 
     def dumps(path = nil)
-      directory.files
+      self.directory.files
+    end
+
+    def get_dump(filename)
+      self.dumps.get(filename)
     end
 
     def is_valid_service?(service_name)
       service = CF::App::Service.find_by_name(service_name)
-      (service && service['label'].match(/^postgresql(-.*)?$/))
-    end
-
-    def is_valid_dump?(filename)
-      ext = File.extname(filename)
-      valid_extensions = ['.sql']
-      valid_extensions.any? { |check_ext| ext.include?(check_ext) }
+      (service && service['label'].match(self.service_label))
     end
 
   end
@@ -40,8 +55,7 @@ class PostgreDumpWorker
   def perform(service_name, filename = nil)
     @service = CF::App::Service.find_by_name(service_name)
 
-    logger.info "PostgreSQL dump for..."
-    logger.info "#{service_name} #{@service.inspect}"
+    logger.info "#{self.class.label} dump for #{service_name}"
 
     unless self.class.is_valid_service?(service_name)
       logger.error "Invalid service => abort"
@@ -56,7 +70,7 @@ class PostgreDumpWorker
 
     @output_path = Rails.application.root + "dumps" + filename
 
-    dump = PgDumper.new(@credentials['name'])
+    dump = self.class.dumper_class.new(@credentials['name'])
     dump.clean!
     dump.auth = { 'host' => @credentials['host'], 'port' => @credentials['port'], 'username' => @credentials['username'], 'password' => @credentials['password'] }
     dump.output = @output_path
@@ -84,4 +98,5 @@ class PostgreDumpWorker
       logger.error "Dump failed!"
     end
   end
+
 end

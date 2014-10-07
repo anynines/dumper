@@ -1,0 +1,13 @@
+<tr>
+  <td>
+    <strong><%= dump.key %></strong><br>
+    <%= @dumps[0].last_modified.to_formatted_s(:short) %>
+  </td>
+  <td>
+    <%= number_to_human_size(dump.content_length) %>
+  </td>
+  <td class="text-right">
+    <%= link_to 'Download', download_path(dump.key), class: 'btn btn-default', target: '_blank' %>
+    <%= link_to 'Delete', delete_path(dump.key), class: 'btn btn-danger', data: { :confirm => "Delete #{dump.key}?" } %>
+  </td>
+</tr>
