@@ -60,6 +60,7 @@ Rails.application.routes.draw do
     collection do
       get 'schedule/:service_name', action: 'schedule', as: 'schedule'
       get 'download/:filename', action: 'download', as: 'download'
+      get 'delete/:filename', action: 'delete', as: 'delete'
     end
   end
 

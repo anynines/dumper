@@ -40,5 +40,7 @@ gem 'spring',        group: :development
 
 gem 'bootstrap-sass', '~> 3.2.0'
 
+gem 'fog'
+gem 'redis'
 gem 'sidekiq'
 gem 'cf-app-utils'

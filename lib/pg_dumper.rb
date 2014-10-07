@@ -5,10 +5,6 @@ class PgDumper
   attr_reader :database
   attr_reader :output
 
-  def self.default_path
-    Rails.application.root + "dumps"
-  end
-
   def initialize database, binary = nil
     @database = database or raise "no database given"
     @args = []
@@ -117,7 +113,7 @@ class PgDumper
   def execute(cmd, options)
     full_cmd = "export PGPASSWORD=#{@password}\n" + cmd + "\nunset PGPASSWORD"
 
-    puts [full_cmd, options].inspect
+    #puts [full_cmd, options].inspect
 
     system(full_cmd, options)
   end
