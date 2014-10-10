@@ -40,8 +40,7 @@ class PostgreDumpWorker
   def perform(service_name, filename = nil)
     @service = CF::App::Service.find_by_name(service_name)
 
-    logger.info "PostgreSQL dump for..."
-    logger.info "#{service_name} #{@service.inspect}"
+    logger.info "PostgreSQL dump for #{service_name}"
 
     unless self.class.is_valid_service?(service_name)
       logger.error "Invalid service => abort"
