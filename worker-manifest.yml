@@ -8,9 +8,9 @@ applications:
   command: bundle exec sidekiq -e production
   no-route: true
   services:
-  - dumper-redis
-  - dumper-swift
-  - test-psql
+  - redis-dumper
+  - swift-dumper
+  - postgre-dumper
+  - postgre-dumper2
   env:
     LD_LIBRARY_PATH: /home/vcap/app/vendor/postgresql/lib
-    SWIFT_AUTH: AUTH_88b8a024aaf3472e8881ea99cc0e5c8f
