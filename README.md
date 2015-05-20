@@ -14,35 +14,36 @@ anynines Dumper is a small web interface for creating and downloading database d
 ### Create services in Cloud Foundry
 Start by creating the services required by dumper:
 Create a new swift service (you can see the available service plans by typing `cf m[arketplace]`):
-```sh
+```SHELL
 cf create-service swift <service_plan> <service_name>
 ```
 
 Create a new redis service:
-```sh
+```SHELL
 cf create-service redis <service_plan> <service_name>
 ```
 
 ### Checkout repository and bundle gems
 Checkout this repository:
-```sh
+```SHELL
 git clone https://github.com/anynines/dumper.git
 cd dumper
 ```
 Bundle the gems:
-```sh
+```SHELL
 bundle install
 ```
 
 ### Adapt manifest files
-Adapt the to suit your installation:
+Adapt the manifest files to suit your installation:
+
 *web-manifest.yml*
 ```YAML
 applications:
 - name: <application name>
   memory: 512M
   instances: 1
-  buildpack: https://github.com/ddollar/heroku-buildpack-multi.git
+  buildpack: https://github.com/cloudfoundry/ruby-buildpack.git
   host: <host name>
   domain: de.a9sapp.eu
   path: .
@@ -62,7 +63,7 @@ applications:
 - name: <worker name>
   memory: 128M
   instances: 1
-  buildpack: https://github.com/ddollar/heroku-buildpack-multi.git
+  buildpack: https://github.com/cloudfoundry/ruby-buildpack.git
   path: .
   command: bundle exec sidekiq -e production
   no-route: true
@@ -76,15 +77,11 @@ applications:
 
 ### Push anynines dumper to Cloud Foundry
 Push the app and its background worker:
-```sh
+```SHELL
  cf push -f web-manifest.yml
  cf push -f worker-manifest.yml
 ```
 
-Manifest Files
-====
-Both web application (web-manifest.yml) and background worker (worker-manifest.yml) need their own manifest files.
-
-Note: You may want do change the username and password for the http authentification.
-
-Note: Make sure that you always use the same database, redis and swift services in both files.
+Both web application (`web-manifest.yml`) and background worker (`worker-manifest.yml`) need their own manifest file.
+Note: You may want do change the username and password for the HTTP authentification.
+Note: Make sure that you use the same database, redis and swift service names in both files.
