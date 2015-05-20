@@ -1,38 +1,30 @@
-Anynines Dumper
-====
-
-Dumper is small web interface for creating and downloading database dumps from cloud foundry services.
-
+# anynines Dumper
+anynines Dumper is a small web interface for creating and downloading database dumps from Cloud Foundry services.
   - Creates asynchronously a database dump using sidekiq
-  - Stores dumps in Openstack swift
+  - Stores dumps in OpenStack Swift
 
-Supported Database Services
-----
+## Supported Database Services
   - PostgreSQL
 
-Addtional Required Services
-----
+## Addtional Required Services
   - Redis
   - Swift
 
-Getting Started
-====
-
-First you need to create the by dumper required services.
-
-Create a new swift service:
+## Getting Started
+### Create services in Cloud Foundry
+Start by creating the services required by dumper:
+Create a new swift service (you can see the available service plans by typing `cf m[arketplace]`):
 ```sh
-cf create-service swift [SERVICEPLAN] [SERVICENAME]
+cf create-service swift <service_plan> <service_name>
 ```
 
 Create a new redis service:
 ```sh
-cf create-service redis [SERVICEPLAN] [SERVICENAME]
+cf create-service redis <service_plan> <service_name>
 ```
 
-Note: You can see the available service plans with ```cf marketplace```
-
-Checkout the repository:
+### Checkout repository and bundle gems
+Checkout this repository:
 ```sh
 git clone https://github.com/anynines/dumper.git
 cd dumper
@@ -42,43 +34,30 @@ Bundle the gems:
 bundle install
 ```
 
-Edit the [manifest.yml](#manifest-files) files and then push the app with it's background worker:
-```sh
- cf push -f web-manifest.yml
- cf push -f worker-manifest.yml
-```
-You can login at the server with the in *web-manifest.yml* defined credentials.
-
-Manifest Files
-====
-Both web application (web-manifest.yml) and background worker (worker-manifest.yml) have their own manifest files:
-
+### Adapt manifest files
+Adapt the to suit your installation:
 *web-manifest.yml*
-```
----
+```YAML
 applications:
-- name: [APPNAME]
+- name: **<application name>**
   memory: 512M
   instances: 1
   buildpack: https://github.com/ddollar/heroku-buildpack-multi.git
-  host: [HOST]
+  host: **<host name>**
   domain: de.a9sapp.eu
   path: .
   services:
-  - [REDIS_SERVICENAME]
-  - [SWIFT_SERVICENAME]
-  - [DATABASE_SERVICENAME]
+  - **<Redis service name>**
+  - **<Swift service name>**
+  - **<Database (PostgreSQL) service name>**
   env:
     LD_LIBRARY_PATH: /home/vcap/app/vendor/postgresql/lib
     HTTP_AUTH_USER: dumper
     HTTP_AUTH_PWD: dumper
 ```
 
-Note: You may want do change the username and password for the http authentification.
-
 *workerweb-manifest.yml*
-```
----
+```YAML
 applications:
 - name: [WORKERNAME]
   memory: 128M
@@ -95,11 +74,17 @@ applications:
     LD_LIBRARY_PATH: /home/vcap/app/vendor/postgresql/lib
 ```
 
-* [APPNAME] a unique name for the application
-* [HOST] a unique hostname for the application
-* [REDIS_SERVICENAME] the name of the redis service you created before
-* [SWIFT_SERVICENAME] the name of the swift service you created before
-* [WORKERNAME] a unique name for the background worker
-* [DATABASE_SERVICENAME] the name of the database service you would like to dump
+### Push anynines dumper to Cloud Foundry
+Push the app and its background worker:
+```sh
+ cf push -f web-manifest.yml
+ cf push -f worker-manifest.yml
+```
+
+Manifest Files
+====
+Both web application (web-manifest.yml) and background worker (worker-manifest.yml) need their own manifest files.
+
+Note: You may want do change the username and password for the http authentification.
 
 Note: Make sure that you always use the same database, redis and swift services in both files.
