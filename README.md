@@ -12,15 +12,16 @@ anynines Dumper is a small web interface for creating and downloading database d
 
 ## Getting Started
 ### Create services in Cloud Foundry
-Start by creating the services required by dumper:
+Start by creating the services required by *anynines Dumper*:
+
 Create a new swift service (you can see the available service plans by typing `cf m[arketplace]`):
 ```SHELL
-cf create-service swift <service_plan> <service_name>
+cf create-service swift <SERVICE PLAN> <SERVICE NAME>
 ```
 
 Create a new redis service:
 ```SHELL
-cf create-service redis <service_plan> <service_name>
+cf create-service redis <SERVICE PLAN> <SERVICE NAME>
 ```
 
 ### Checkout repository and bundle gems
@@ -40,17 +41,17 @@ Adapt the manifest files to suit your installation:
 *web-manifest.yml*
 ```YAML
 applications:
-- name: <application name>
+- name: <APPLICATION NAME>
   memory: 512M
   instances: 1
   buildpack: https://github.com/cloudfoundry/ruby-buildpack.git
-  host: <host name>
+  host: <HOST NAME>
   domain: de.a9sapp.eu
   path: .
   services:
-  - <Redis service name>
-  - <Swift service name>
-  - <Database (PostgreSQL) service name>
+  - <REDIS SERVICE NAME>
+  - <SWIFT SERVICE NAME>
+  - <DATABASE (PostgreSQL) SERVICE NAME>
   env:
     LD_LIBRARY_PATH: /home/vcap/app/vendor/postgresql/lib
     HTTP_AUTH_USER: dumper
@@ -60,7 +61,7 @@ applications:
 *workerweb-manifest.yml*
 ```YAML
 applications:
-- name: <worker name>
+- name: <WORKER NAME>
   memory: 128M
   instances: 1
   buildpack: https://github.com/cloudfoundry/ruby-buildpack.git
@@ -68,9 +69,9 @@ applications:
   command: bundle exec sidekiq -e production
   no-route: true
   services:
-  - <Redis service name>
-  - <Swift service name>
-  - <Database (PostgreSQL) service name>
+  - <REDIS SERVICE NAME>
+  - <SWIFT SERVICE NAME>
+  - <DATABASE (PostgreSQL) SERVICE NAME>
   env:
     LD_LIBRARY_PATH: /home/vcap/app/vendor/postgresql/lib
 ```
