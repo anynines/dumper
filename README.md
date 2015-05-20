@@ -1,14 +1,20 @@
 # anynines Dumper
 *anynines Dumper* is a small web interface for creating and downloading database dumps from Cloud Foundry services.
-  - Creates asynchronously a database dump using [sidekiq](http://sidekiq.org/)
-  - Stores dumps in OpenStack Swift
+- Creates asynchronously a database dump using [sidekiq](http://sidekiq.org/)
+- Stores dumps in OpenStack Swift
 
 ## Supported Database Services
-  - PostgreSQL
+- PostgreSQL
 
 ## Addtional Required Services
-  - Redis
-  - Swift
+- Redis
+- Swift
+
+## Requirements
+- Ruby 2.2.2
+- Bundler (`gem install bundler`)
+- [Libpq-dev](http://stackoverflow.com/questions/6040583/cant-find-the-libpq-fe-h-header-when-trying-to-install-pg-gem)
+- [pg](https://rubygems.org/gems/pg/versions/0.18.2) (`gem install pg`)
 
 ## Getting Started
 ### Create services in Cloud Foundry
