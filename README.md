@@ -63,8 +63,8 @@ applications:
   #- <DATABASE SERVICE NAME 3>
   env:
     LD_LIBRARY_PATH: /home/vcap/app/vendor/postgresql/lib
-    HTTP_AUTH_USER: admin
-    HTTP_AUTH_PWD: admin
+    HTTP_AUTH_USER: <USER NAME HTTP AUTHENTICATION> # HTTP Authentication is used to access the web interface
+    HTTP_AUTH_PWD: <PASSWORD HTTP AUTHENTICATION>
 ```
 
 *workerweb-manifest.yml*
