@@ -51,11 +51,11 @@ applications:
   services:
   - <REDIS SERVICE NAME>
   - <SWIFT SERVICE NAME>
-  - <DATABASE (PostgreSQL) SERVICE NAME>
+  - <DATABASE SERVICE NAME> # You can use more than one database (PostgreSQL) service
   env:
     LD_LIBRARY_PATH: /home/vcap/app/vendor/postgresql/lib
-    HTTP_AUTH_USER: dumper
-    HTTP_AUTH_PWD: dumper
+    HTTP_AUTH_USER: admin
+    HTTP_AUTH_PWD: admin
 ```
 
 *workerweb-manifest.yml*
@@ -71,7 +71,7 @@ applications:
   services:
   - <REDIS SERVICE NAME>
   - <SWIFT SERVICE NAME>
-  - <DATABASE (PostgreSQL) SERVICE NAME>
+  - <DATABASE SERVICE NAME> # You can use more than one database (PostgreSQL) service
   env:
     LD_LIBRARY_PATH: /home/vcap/app/vendor/postgresql/lib
 ```
@@ -84,5 +84,7 @@ Push the app and its background worker:
 ```
 
 Both web application (`web-manifest.yml`) and background worker (`worker-manifest.yml`) need their own manifest file.
+
 Note: You may want do change the username and password for the HTTP authentification.
-Note: Make sure that you use the same database, redis and swift service names in both files.
+
+Note: Make sure that you use the same database, Redis and Swift service names in both files.
