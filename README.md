@@ -39,17 +39,17 @@ Adapt the to suit your installation:
 *web-manifest.yml*
 ```YAML
 applications:
-- name: **<application name>**
+- name: <application name>
   memory: 512M
   instances: 1
   buildpack: https://github.com/ddollar/heroku-buildpack-multi.git
-  host: **<host name>**
+  host: <host name>
   domain: de.a9sapp.eu
   path: .
   services:
-  - **<Redis service name>**
-  - **<Swift service name>**
-  - **<Database (PostgreSQL) service name>**
+  - <Redis service name>
+  - <Swift service name>
+  - <Database (PostgreSQL) service name>
   env:
     LD_LIBRARY_PATH: /home/vcap/app/vendor/postgresql/lib
     HTTP_AUTH_USER: dumper
@@ -59,7 +59,7 @@ applications:
 *workerweb-manifest.yml*
 ```YAML
 applications:
-- name: [WORKERNAME]
+- name: <worker name>
   memory: 128M
   instances: 1
   buildpack: https://github.com/ddollar/heroku-buildpack-multi.git
@@ -67,9 +67,9 @@ applications:
   command: bundle exec sidekiq -e production
   no-route: true
   services:
-  - [REDIS_SERVICENAME]
-  - [SWIFT_SERVICENAME]
-  - [DATABASE_SERVICENAME]
+  - <Redis service name>
+  - <Swift service name>
+  - <Database (PostgreSQL) service name>
   env:
     LD_LIBRARY_PATH: /home/vcap/app/vendor/postgresql/lib
 ```
