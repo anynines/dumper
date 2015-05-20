@@ -1,6 +1,6 @@
 # anynines Dumper
-anynines Dumper is a small web interface for creating and downloading database dumps from Cloud Foundry services.
-  - Creates asynchronously a database dump using sidekiq
+*anynines Dumper* is a small web interface for creating and downloading database dumps from Cloud Foundry services.
+  - Creates asynchronously a database dump using (sidekiq)[http://sidekiq.org/]
   - Stores dumps in OpenStack Swift
 
 ## Supported Database Services
