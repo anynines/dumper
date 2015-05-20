@@ -95,8 +95,9 @@ Push the app and its background worker:
  cf push -f worker-manifest.yml
 ```
 
-Both web application (`web-manifest.yml`) and background worker (`worker-manifest.yml`) need their own manifest file.
-
-Note: You may want do change the username and password for the HTTP authentification.
-
 Note: Make sure that you use the same database, Redis and Swift service names in both files.
+
+### Access web interface
+Run `cf apps` to see all apps. You can find the URL of the web interface for *anynines Dumper* in the `urls` column of your app.
+
+Open the displayed URL in a browser and login using the credentials you specified for `HTTP_AUTH_USER` and `HTTP_AUTH_PWD`.
