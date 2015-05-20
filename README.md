@@ -40,6 +40,7 @@ Adapt the manifest files to suit your installation:
 
 *web-manifest.yml*
 ```YAML
+---
 applications:
 - name: <APPLICATION NAME>
   memory: 512M
@@ -52,6 +53,8 @@ applications:
   - <REDIS SERVICE NAME>
   - <SWIFT SERVICE NAME>
   - <DATABASE SERVICE NAME> # You can use more than one database service
+  #- <DATABASE SERVICE NAME 2>
+  #- <DATABASE SERVICE NAME 3>
   env:
     LD_LIBRARY_PATH: /home/vcap/app/vendor/postgresql/lib
     HTTP_AUTH_USER: admin
@@ -60,6 +63,7 @@ applications:
 
 *workerweb-manifest.yml*
 ```YAML
+---
 applications:
 - name: <WORKER NAME>
   memory: 128M
@@ -72,6 +76,8 @@ applications:
   - <REDIS SERVICE NAME>
   - <SWIFT SERVICE NAME>
   - <DATABASE SERVICE NAME> # You can use more than one database service
+  #- <DATABASE SERVICE NAME 2>
+  #- <DATABASE SERVICE NAME 3>
   env:
     LD_LIBRARY_PATH: /home/vcap/app/vendor/postgresql/lib
 ```
