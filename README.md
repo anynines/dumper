@@ -1,6 +1,6 @@
 # anynines Dumper
 *anynines Dumper* is a small web interface for creating and downloading database dumps from Cloud Foundry services.
-  - Creates asynchronously a database dump using (sidekiq)[http://sidekiq.org/]
+  - Creates asynchronously a database dump using [sidekiq](http://sidekiq.org/)
   - Stores dumps in OpenStack Swift
 
 ## Supported Database Services
@@ -51,7 +51,7 @@ applications:
   services:
   - <REDIS SERVICE NAME>
   - <SWIFT SERVICE NAME>
-  - <DATABASE SERVICE NAME> # You can use more than one database (PostgreSQL) service
+  - <DATABASE SERVICE NAME> # You can use more than one database service
   env:
     LD_LIBRARY_PATH: /home/vcap/app/vendor/postgresql/lib
     HTTP_AUTH_USER: admin
@@ -71,7 +71,7 @@ applications:
   services:
   - <REDIS SERVICE NAME>
   - <SWIFT SERVICE NAME>
-  - <DATABASE SERVICE NAME> # You can use more than one database (PostgreSQL) service
+  - <DATABASE SERVICE NAME> # You can use more than one database service
   env:
     LD_LIBRARY_PATH: /home/vcap/app/vendor/postgresql/lib
 ```
