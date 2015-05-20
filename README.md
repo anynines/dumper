@@ -6,7 +6,7 @@
 ## Supported Database Services
 - PostgreSQL
 
-## Addtional Required Services
+## Additional Required Services
 - Redis
 - Swift
 
