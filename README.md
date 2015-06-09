@@ -63,18 +63,18 @@ applications:
   #- <DATABASE SERVICE NAME 3>
   env:
     LD_LIBRARY_PATH: /home/vcap/app/vendor/postgresql/lib
-    HTTP_AUTH_USER: <USER NAME HTTP AUTHENTICATION> # HTTP Authentication is used to access the web interface
-    HTTP_AUTH_PWD: <PASSWORD HTTP AUTHENTICATION>
+    HTTP_AUTH_USER: <USER NAME> # HTTP Authentication is used to access the web interface
+    HTTP_AUTH_PWD: <PASSWORD>
 ```
 
-*workerweb-manifest.yml*
+*worker-manifest.yml*
 ```YAML
 ---
 applications:
 - name: <WORKER NAME>
   memory: 128M
   instances: 1
-  buildpack: https://github.com/cloudfoundry/ruby-buildpack.git
+  buildpack: https://github.com/ddollar/heroku-buildpack-multi.git
   path: .
   command: bundle exec sidekiq -e production
   no-route: true
