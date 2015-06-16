@@ -90,8 +90,8 @@ applications:
     LD_LIBRARY_PATH: /home/vcap/app/vendor/postgresql/lib
 ```
 
-### Push anynines dumper to Cloud Foundry
-Deploy the app and its background worker to the cloud:
+### Deploy anynines Dumper
+Deploy the web interface and its background worker to the cloud:
 ```SHELL
  cf push -f web-manifest.yml
 ```
