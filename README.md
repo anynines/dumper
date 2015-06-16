@@ -1,31 +1,31 @@
 # anynines Dumper
-*anynines Dumper* is a small web interface for creating and downloading database dumps from Cloud Foundry services.
-- Creates asynchronously a database dump using [sidekiq](http://sidekiq.org/)
-- Stores dumps in OpenStack Swift
+*anynines Dumper* is an utility for creating and downloading database dumps from Cloud Foundry services with the following features:
+- Start the dump process and download the saved database dumps from a web interface
+- Dumps are created asynchronously using a background worker ([sidekiq](http://sidekiq.org)) and stored in OpenStack Swift
 
 ## Supported Database Services
-- PostgreSQL
+- [PostgreSQL](http://www.postgresql.org/)
 
 ## Additional Required Services
-- Redis
-- Swift
+- [Redis](http://redis.io/)
+- [Swift](http://docs.openstack.org/developer/swift/)
 
 ## Requirements
-- Ruby 2.2.2
-- Bundler (`gem install bundler`)
+- [Ruby](https://www.ruby-lang.org/en/) 2.2.2
+- [Bundler](https://rubygems.org/gems/bundler) (`gem install bundler`)
 - [Libpq-dev](http://stackoverflow.com/questions/6040583/cant-find-the-libpq-fe-h-header-when-trying-to-install-pg-gem)
 - [pg](https://rubygems.org/gems/pg/versions/0.18.2) (`gem install pg`)
 
 ## Getting Started
 ### Create services in Cloud Foundry
-Start by creating the services required by *anynines Dumper*:
+After you've logged in to your anynines account with the [Cloud Foundry CLI](https://github.com/cloudfoundry/cli#downloads), start by creating the services required by *anynines Dumper*: Swift and Redis.
 
-Create a new swift service (you can see the available service plans by typing `cf m[arketplace]`):
+Create a **new Swift service**. To see the available service plans, type `cf m[arketplace]`. You can choose any name you want for the service name. Please make sure to use quotation marks if you use whitespace characters.
 ```SHELL
 cf create-service swift <SERVICE PLAN> <SERVICE NAME>
 ```
 
-Create a new redis service:
+Create a **new Redis service** as you did with Swift:
 ```SHELL
 cf create-service redis <SERVICE PLAN> <SERVICE NAME>
 ```
@@ -36,13 +36,13 @@ Checkout this repository:
 git clone https://github.com/anynines/dumper.git
 cd dumper
 ```
-Bundle the gems:
+Install the gems:
 ```SHELL
 bundle install
 ```
 
 ### Adapt manifest files
-Adapt the manifest files to suit your installation:
+Adapt the manifest files for the web interface (`web-manifest.yml`) and the background worker (`worker-manifest.yml`) to suit your installation:
 
 *web-manifest.yml*
 ```YAML
@@ -89,13 +89,13 @@ applications:
 ```
 
 ### Push anynines dumper to Cloud Foundry
-Push the app and its background worker:
+Push the app and its background worker into the cloud:
 ```SHELL
  cf push -f web-manifest.yml
  cf push -f worker-manifest.yml
 ```
 
-Note: Make sure that you use the same database, Redis and Swift service names in both files.
+Note: Make sure to use in both files the same service names (for the database, Swift and Redis services).
 
 ### Access web interface
 Run `cf apps` to see all apps. You can find the URL of the web interface for *anynines Dumper* in the `urls` column of your app.
