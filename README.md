@@ -10,7 +10,7 @@
 
 ### Required services
 - [Redis](http://redis.io/)
-- [Swift](http://docs.openstack.org/developer/swift/)
+- [OpenStack Swift](http://docs.openstack.org/developer/swift/)
 
 ### Local requirements
 - [Ruby](https://www.ruby-lang.org/en/) 2.2.2
@@ -91,7 +91,7 @@ applications:
 ```
 
 ### Push anynines dumper to Cloud Foundry
-Push the app and its background worker into the cloud:
+Deploy the app and its background worker to the cloud:
 ```SHELL
  cf push -f web-manifest.yml
 ```
