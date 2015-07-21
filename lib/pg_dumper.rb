@@ -70,6 +70,10 @@ class PgDumper
     @stderr = "/dev/null"
   end
 
+  def skip_privileges!
+    add_args '--no-acl'
+  end
+
   def connection= opts
     add_args('--port', opts['port']) if opts['port']
     add_args('-h', opts['host']) if opts['host']
