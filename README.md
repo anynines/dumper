@@ -10,7 +10,7 @@
 
 ### Required services
 - [Redis](http://redis.io/)
-- [OpenStack Swift](http://docs.openstack.org/developer/swift/)
+- [Swift](http://docs.openstack.org/developer/swift/)
 
 ### Local requirements
 - [Ruby](https://www.ruby-lang.org/en/) 2.2.2
@@ -22,7 +22,7 @@
 ### Create services in Cloud Foundry
 After you've logged in to your anynines account with the [Cloud Foundry CLI](https://github.com/cloudfoundry/cli#downloads), start by creating the services required by *anynines Dumper*: **Swift** and **Redis**.
 
-Create a new Swift service. To see the available service plans, type `cf m[arketplace]`. You can choose any name you want for the service name. Please make sure to use quotation marks if you use whitespace characters in the name.
+Create a new Swift service. To see the available service plans, type `cf m[arketplace]`. You can choose any name you want as service name. Please make sure to use quotation marks if you use whitespace characters in the name.
 ```SHELL
 cf create-service swift <SERVICE PLAN> <SERVICE NAME>
 ```
@@ -87,11 +87,11 @@ applications:
   #- <DATABASE SERVICE NAME 2>
   #- <DATABASE SERVICE NAME 3>
   env:
-    LD_LIBRARY_PATH: /home/vcap/app/vendor/postgresql/lib
+    LD_LIBRARY_PATH: /home/vcap/afpp/vendor/postgresql/lib
 ```
 
-### Deploy anynines Dumper
-Deploy the web interface and its background worker to the cloud:
+### Push anynines dumper to Cloud Foundry
+Deploy the app and its background worker to the cloud:
 ```SHELL
  cf push -f web-manifest.yml
 ```

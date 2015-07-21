@@ -56,7 +56,9 @@ class PostgreDumpWorker
     @output_path = Rails.application.root + "dumps" + filename
 
     dump = PgDumper.new(@credentials['name'])
-    dump.clean!
+    #dump.clean!
+    dump.skip_owner!
+    dump.skip_privileges!
     dump.auth = { 'host' => @credentials['host'], 'port' => @credentials['port'], 'username' => @credentials['username'], 'password' => @credentials['password'] }
     dump.output = @output_path
 
