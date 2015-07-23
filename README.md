@@ -87,7 +87,7 @@ applications:
   #- <DATABASE SERVICE NAME 2>
   #- <DATABASE SERVICE NAME 3>
   env:
-    LD_LIBRARY_PATH: /home/vcap/afpp/vendor/postgresql/lib
+    LD_LIBRARY_PATH: /home/vcap/app/vendor/postgresql/lib
 ```
 
 ### Push anynines dumper to Cloud Foundry

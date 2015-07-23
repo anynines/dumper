@@ -1,2 +1,2 @@
-https://github.com/timkrautavarteq/ruby-buildpack.git
+https://github.com/cloudfoundry/ruby-buildpack.git#v1.4.1
 https://github.com/anynines/heroku-buildpack-postgresql.git
