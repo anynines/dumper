@@ -3,7 +3,7 @@ applications:
 - name: dumper
   memory: 512M
   instances: 1
-  buildpack: https://github.com/cloudfoundry/ruby-buildpack.git#v1.4.2
+  buildpack: https://github.com/cloudfoundry/ruby-buildpack.git#v1.3.1
   host: dumpertk
   domain: de.a9sapp.eu
   path: .
